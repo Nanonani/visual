@@ -143,6 +143,9 @@ class BubbleSort{
         while(!sorted){
             sorted = true;
             for(i = 0; i < j; i++){
+				if(this.aborted){
+            		throw new Error("Aborted");
+        		}
                 canvas.drawArrayElement(sortedArray[i], "red", i);
                 canvas.drawArrayElement(sortedArray[i+1], "red", i+1);
                 await sleep(animationSpeed)
@@ -178,6 +181,9 @@ class SelectionSort{
         let sortedArray = [...array];
         //let min = canvasHeight;
         for(let j = 0; j < sortedArray.length/2; j++){
+			if(this.aborted){
+            	throw new Error("Aborted");
+        	}
             let maxIndex = j;
             let minIndex = j;
             
@@ -211,6 +217,9 @@ class SelectionSort{
         canvas.clearCanvas();
         canvas.drawArray(sortedArray);
         for(let j = 0; j < sortedArray.length/2; j++){
+			if(this.aborted){
+            	throw new Error("Aborted");
+        	}
             let maxIndex = j;
             let minIndex = j;
             
@@ -265,12 +274,12 @@ class MergeSort{
         let aborted = false;
     }
     abort(){
-        aborted = true;
+        this.aborted = true;
     }
 
 
     merge(arr,mid, begin, end){
-        if(aborted){
+        if(this.aborted){
             throw new Error("Aborted");
         }
         let arr2 = [...arr]
@@ -299,7 +308,7 @@ class MergeSort{
     }
 
     sort(arr, begin, end){
-        if(aborted){
+        if(this.aborted){
             throw new Error("Aborted");
         }
         if(begin >= end){
@@ -313,7 +322,7 @@ class MergeSort{
     }
 
     async animateMerge(arr, mid, begin, end, canvas){
-        if(aborted){
+        if(this.aborted){
             throw new Error("Aborted");
         }
         let arr2 = [...arr]
@@ -367,7 +376,7 @@ class MergeSort{
     }
 
     async animationSort(arr, begin, end, canvas){
-        if(aborted){
+        if(this.aborted){
             throw new Error("Aborted");
         }
         if(begin >= end){
@@ -380,7 +389,7 @@ class MergeSort{
     }
 
     async initAnimateSort(unsortedArray, canvas){
-        if(aborted){
+        if(this.aborted){
             throw new Error("Aborted");
         }
         const arr = [...unsortedArray];
