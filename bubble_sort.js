@@ -454,6 +454,9 @@ const startAnimation = async () => {
     }
 }
 
+const abortButton = () => {
+	currentPlaying.abort()
+}
 const changeAnimationSpeed = (html_element) => {
     animationSpeed = 150 - (150 * html_element.value) / 100 + 1;
     console.log(animationSpeed);
