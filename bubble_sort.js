@@ -414,17 +414,17 @@ const startAnimation = () => {
         case "Bubble Sort":
             const bubble = new BubbleSort();
             bubble.animateSort(unsortedArray, canvas1);
-            let currentPlaying = bubble;
+            currentPlaying = bubble;
             break;
         case "Selection Sort": 
             const selection = new SelectionSort();
             selection.animateSort(unsortedArray, canvas1);
-            let currentPlaying = selection;
+            currentPlaying = selection;
             break
         case "Merge Sort": 
             const merge = new MergeSort();
             merge.initAnimateSort(unsortedArray, canvas1);
-            let currentPlaying = merge;
+            currentPlaying = merge;
             break
     }
 }
