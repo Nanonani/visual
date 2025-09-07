@@ -141,6 +141,9 @@ class BubbleSort{
         canvas.drawArray(sortedArray);
 
         while(!sorted){
+			if(this.aborted){
+            	throw new Error("Aborted");
+        	}
             sorted = true;
             for(i = 0; i < j; i++){
 				if(this.aborted){
@@ -188,6 +191,9 @@ class SelectionSort{
             let minIndex = j;
             
             for(let i = j; i < sortedArray.length - j; i++){
+				if(this.aborted){
+            		throw new Error("Aborted");
+        		}
                 if(sortedArray[i] < sortedArray[minIndex]){
                     minIndex = i
                 } 
@@ -224,6 +230,9 @@ class SelectionSort{
             let minIndex = j;
             
             for(let i = j; i < sortedArray.length - j; i++){
+				if(this.aborted){
+            		throw new Error("Aborted");
+        		}
                 canvas.drawArrayElement(sortedArray[i], "red", i);
                 canvas.drawArrayElement(sortedArray[minIndex], "green", minIndex);
                 canvas.drawArrayElement(sortedArray[maxIndex], "green", maxIndex);
@@ -287,6 +296,9 @@ class MergeSort{
         let k = mid+1;
 
         for(let i = begin; i <= end; i++){
+			if(this.aborted){
+            	throw new Error("Aborted");
+       	 	}
             if(j === mid+1){
                 arr[i] = arr2[k];
                 k++;
@@ -416,6 +428,7 @@ let currentPlaying = null;
 const startAnimation = () => {
     if(currentPlaying){
         currentPlaying.abort();
+		await currentPlaying;
     }
     canAnimationStart = false;
     canvas1.clearCanvas()
