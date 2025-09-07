@@ -425,7 +425,7 @@ userSelection.onchange = () => {
     canAnimationStart = true;
 }
 let currentPlaying = null;
-const startAnimation = () => {
+const startAnimation = async () => {
     if(currentPlaying){
         currentPlaying.abort();
 		await currentPlaying;
