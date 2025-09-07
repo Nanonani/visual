@@ -432,8 +432,8 @@ const startAnimation = async () => {
     if(currentPlaying){
         currentPlaying.abort();
 		await currentPlaying;
-		await sleep(10);
-		canvas1.clearCanvas();
+		currentPlaying.abort();
+		await currentPlaying;
 		canvas1.clearCanvas();
     }
     canAnimationStart = false;
@@ -461,8 +461,9 @@ const abortButton = async () => {
 	currentPlaying.abort();
 	await currentPlaying;
 	await startAnimation;
-	await sleep(10);
-	canvas1.clearCanvas();
+	currentPlaying.abort();
+	await currentPlaying;
+	await startAnimation;
 	canvas1.clearCanvas();
 }
 const changeAnimationSpeed = (html_element) => {
