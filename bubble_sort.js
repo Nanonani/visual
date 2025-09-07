@@ -100,7 +100,16 @@ class Canvas{
 }
 //BUBBLE SORT 
 class BubbleSort{
+    constructor(){
+        let aborted = false;
+    }
+    abort(){
+        aborted = true;
+    }
     sort(array){
+        if(aborted){
+            throw new Error("Aborted");
+        }
         let sorted = false;
         let j = array.length;
         let sortedArray = [...array]; 
@@ -120,6 +129,9 @@ class BubbleSort{
     }
     
     async animateSort(array, canvas){
+        if(aborted){
+            throw new Error("Aborted");
+        }
         let i = 0;
         let j = array.length;
         let sorted;
@@ -154,10 +166,15 @@ class BubbleSort{
 
 class SelectionSort{
     constructor(){
-        
+        let aborted = false;
     }
-
+    abort(){
+        aborted = true;
+    }
     sort(array){
+        if(aborted){
+            throw new Error("Aborted");
+        }
         let sortedArray = [...array];
         //let min = canvasHeight;
         for(let j = 0; j < sortedArray.length/2; j++){
@@ -187,6 +204,9 @@ class SelectionSort{
     }
     
     async animateSort(array, canvas){
+        if(aborted){
+            throw new Error("Aborted");
+        }
         let sortedArray = [...array];
         canvas.clearCanvas();
         canvas.drawArray(sortedArray);
@@ -241,10 +261,18 @@ class SelectionSort{
 }
 
 class MergeSort{
-    constructor(){}
+    constructor(){
+        let aborted = false;
+    }
+    abort(){
+        aborted = true;
+    }
 
 
     merge(arr,mid, begin, end){
+        if(aborted){
+            throw new Error("Aborted");
+        }
         let arr2 = [...arr]
         let j = begin;
         let k = mid+1;
@@ -271,6 +299,9 @@ class MergeSort{
     }
 
     sort(arr, begin, end){
+        if(aborted){
+            throw new Error("Aborted");
+        }
         if(begin >= end){
             return;
         }
@@ -282,6 +313,9 @@ class MergeSort{
     }
 
     async animateMerge(arr, mid, begin, end, canvas){
+        if(aborted){
+            throw new Error("Aborted");
+        }
         let arr2 = [...arr]
         let j = begin;
         let k = mid+1;
@@ -333,17 +367,22 @@ class MergeSort{
     }
 
     async animationSort(arr, begin, end, canvas){
+        if(aborted){
+            throw new Error("Aborted");
+        }
         if(begin >= end){
             return;
         }
         
         const mid = Math.floor(begin + (end - begin)/2)
-        await this.animationSort(arr, begin, mid, canvas);
-        await this.animationSort(arr, mid+1, end, canvas);
-        await this.animateMerge(arr, mid, begin, end, canvas);
+        await Promise.all([this.animationSort(arr, begin, mid, canvas),this.animationSort(arr, mid+1, end, canvas)]);
+	await this.animateMerge(arr, mid, begin, end, canvas);
     }
 
     async initAnimateSort(unsortedArray, canvas){
+        if(aborted){
+            throw new Error("Aborted");
+        }
         const arr = [...unsortedArray];
         canvas.drawArray(arr);
         await this.animationSort(arr, 0, arr.length-1, canvas);
@@ -364,10 +403,10 @@ userSelection.onchange = () => {
     currentAlgorithm = userSelection.value;
     canAnimationStart = true;
 }
-
+let currentPlaying = null;
 const startAnimation = () => {
-    if(!canAnimationStart){
-        return;
+    if(currentPlaying){
+        currentPlaying.abort();
     }
     canAnimationStart = false;
     canvas1.clearCanvas()
@@ -375,14 +414,17 @@ const startAnimation = () => {
         case "Bubble Sort":
             const bubble = new BubbleSort();
             bubble.animateSort(unsortedArray, canvas1);
+            let currentPlaying = bubble;
             break;
         case "Selection Sort": 
             const selection = new SelectionSort();
             selection.animateSort(unsortedArray, canvas1);
+            let currentPlaying = selection;
             break
         case "Merge Sort": 
             const merge = new MergeSort();
             merge.initAnimateSort(unsortedArray, canvas1);
+            let currentPlaying = merge;
             break
     }
 }
@@ -395,5 +437,3 @@ const changeAnimationSpeed = (html_element) => {
 const changeElementCount = (html_element) => {
     elementCount = html_element.value;
 }
-
-
