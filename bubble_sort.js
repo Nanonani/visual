@@ -342,6 +342,9 @@ class MergeSort{
         let k = mid+1;
 
         for(let i = begin; i <= end; i++){
+			if(this.aborted){
+            	throw new Error("Aborted");
+        	}
             if(j === mid+1){
                 canvas.drawArrayElement(arr[k], "green", k);
                 await sleep(animationSpeed);
