@@ -343,7 +343,8 @@ class MergeSort{
         await this.animateMerge(arr, mid, begin, end, canvas);
     }
 
-    async initAnimateSort(arr, canvas){
+    async initAnimateSort(unsortedArray, canvas){
+        const arr = [...unsortedArray];
         canvas.drawArray(arr);
         await this.animationSort(arr, 0, arr.length-1, canvas);
     }
@@ -380,8 +381,9 @@ const startAnimation = () => {
             selection.animateSort(unsortedArray, canvas1);
             break
         case "Merge Sort": 
-            const array = [...unsortedArray];
             const merge = new MergeSort();
+            merge.initAnimateSort(unsortedArray, canvas1);
+            break
     }
 }
 
