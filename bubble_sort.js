@@ -455,7 +455,7 @@ const startAnimation = async () => {
     }
 }
 
-const abortButton = () => {
+const abortButton = async () => {
 	currentPlaying.abort();
 	await currentPlaying;
 	canvas1.clearCanvas();
