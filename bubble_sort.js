@@ -104,10 +104,10 @@ class BubbleSort{
         let aborted = false;
     }
     abort(){
-        aborted = true;
+        this.aborted = true;
     }
     sort(array){
-        if(aborted){
+        if(this.aborted){
             throw new Error("Aborted");
         }
         let sorted = false;
@@ -129,7 +129,7 @@ class BubbleSort{
     }
     
     async animateSort(array, canvas){
-        if(aborted){
+        if(this.aborted){
             throw new Error("Aborted");
         }
         let i = 0;
@@ -169,10 +169,10 @@ class SelectionSort{
         let aborted = false;
     }
     abort(){
-        aborted = true;
+        this.aborted = true;
     }
     sort(array){
-        if(aborted){
+        if(this.aborted){
             throw new Error("Aborted");
         }
         let sortedArray = [...array];
@@ -204,7 +204,7 @@ class SelectionSort{
     }
     
     async animateSort(array, canvas){
-        if(aborted){
+        if(this.aborted){
             throw new Error("Aborted");
         }
         let sortedArray = [...array];
